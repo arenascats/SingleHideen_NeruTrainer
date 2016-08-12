@@ -424,7 +424,7 @@ namespace NeruTrainer
             FileStream fs = new FileStream(CurrentFilename, FileMode.Create);
             tbSavefileName.Text = CurrentFilename;
             StreamWriter sw = new StreamWriter(fs);
-            sw.WriteLine("Train Filename:" + tbReadPath);
+            sw.WriteLine("Train Filename:" + tbReadPath.Text);
             sw.WriteLine("Input node num:"+tbInputNodeNum.Text);
             sw.WriteLine("Hide node num:"+tbHideNodeNum.Text);
             sw.WriteLine("Output node num:"+tbOutputNodeNum.Text);
@@ -433,7 +433,8 @@ namespace NeruTrainer
             {
                 for (int j = 0; j < HideNodeNum; j++)
                 {
-                    sw.WriteLine( "W" + i + "-" + j + "=" + HideW[j, i]  );
+                  sw.WriteLine("W" + i + "-" + j + "=" + HideW[j, i]);
+                   // sw.WriteLine("输入层" + i + "与隐藏层" + j + "的权W" + i + "-" + j + "= " + HideW[j, i]);
                 }
             }
             sw.WriteLine("H-O");
@@ -441,9 +442,10 @@ namespace NeruTrainer
             {
                 for (int j = 0; j < OutputNodeNum; j++)
                 {
-                    sw.WriteLine( "W" + i + "-" + j + "= " + OutW[j, i]);
+                    sw.WriteLine("W" + i + "-" + j + "= " + OutW[j, i]);
                 }
             }
+            sw.Close();
             tbInformation.Text += '\n' + "保存完成，文件名为:" + CurrentFilename;
         }
 
