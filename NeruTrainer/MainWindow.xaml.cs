@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Drawing;
 namespace NeruTrainer
 {
     /// <summary>
@@ -61,7 +61,7 @@ namespace NeruTrainer
             HideNodeNum = Convert.ToInt16(tbHideNodeNum.Text);
             Rate_HideToOutW = Convert.ToDouble(tbRateHide.Text);
             Rate_InputToHideW = Convert.ToDouble(tbRateOut.Text);
-            CurrentTrigFunction= cbTrigFunction.SelectedIndex;//设置函数
+            CurrentTrigFunction = cbTrigFunction.SelectedIndex;//设置函数
             RetrainTime = Convert.ToInt16(tbReTime.Text);
 
 
@@ -79,13 +79,13 @@ namespace NeruTrainer
         {
             System.Random rand = new Random();
             int i = rand.Next();
-                HideW = ((2.0 * i) / per) - 1;
+            HideW = ((2.0 * i) / per) - 1;
         }
         public void InitOutW(double OutW, double per)//初始化输入层到隐藏层的权重w，使用方式例InitOutW(HideW[SampleNum] , 4)
         {
             System.Random rand = new Random();
             int j = rand.Next();
-                OutW = (2.0 * j / per) - 1;
+            OutW = (2.0 * j / per) - 1;
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -93,7 +93,7 @@ namespace NeruTrainer
             string FileName = "";
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-             openFileDialog1.Filter = "文本文件(*.txt)|*.txt|(*.rtf)|*.rtf";
+            openFileDialog1.Filter = "文本文件(*.txt)|*.txt|(*.rtf)|*.rtf";
             if (openFileDialog1.ShowDialog() == true)
             {
                 try
@@ -108,19 +108,22 @@ namespace NeruTrainer
                 }
             }
         }
-        
+
         private void btStartTrain_Click(object sender, RoutedEventArgs e)
         {
-            if(BeenInit == 1)
+            if (BeenInit == 1)
             {
                 Init();
                 RandInitWMode2();
                 BeenInit = 0;
             }
-           
-            for (int time=0; time< RetrainTime; time ++)
-            TrainRun();
+
+            for (int time = 0; time < RetrainTime; time++)
+                TrainRun();
             DataDisplay();
+
+            btDisplayW.IsEnabled = true;
+            btSaveTrain.IsEnabled = true;
         }
 
         public void ReadFileAndGiveDataSerial(string Filepath, int innode, int outnode)//读取文件中的训练数据
@@ -152,7 +155,7 @@ namespace NeruTrainer
             }
             catch
             {
-                MessageBox.Show("文件读取分割过程失败","检查文件是否有字符串，是否有空格");
+                MessageBox.Show("文件读取分割过程失败", "检查文件是否有字符串，是否有空格");
             }
             SampleNum = SampleNumCount;
             Console.WriteLine("SampleNum = {0}", SampleNum);
@@ -201,7 +204,7 @@ namespace NeruTrainer
                     for (int i = 0; i < InputNodeNum; i++)
                     {
                         CurrentHideInputValue[i] = CurrentHideInputValue[i] + HideW[j, i] * TrainInputValue[j];
-                        CurrentHideOutputValue[i] = MyFunc.Liner(HideW[j, i], CurrentHideInputValue[j],0);
+                        CurrentHideOutputValue[i] = MyFunc.Liner(HideW[j, i], CurrentHideInputValue[j], 0);
                     }
                 }
                 else if (CurrentTrigFunction == Sigmoid)
@@ -279,7 +282,7 @@ namespace NeruTrainer
         }
         void RandInitW()
         {
-            
+
             Random rand = new Random();
             int Seed = 10;
             Random ro = new Random(10);
@@ -307,10 +310,147 @@ namespace NeruTrainer
                 }
             }
         }
+
+        private void btDisNetwork_Click(object sender, RoutedEventArgs e)
+        {
+            int ImageDrawRatio = 3;
+            int InNodeNum = Convert.ToInt16(tbInputNodeNum.Text);
+            int HideNodeNum = Convert.ToInt16(tbHideNodeNum.Text);
+            int OutNodeNum = Convert.ToInt16(tbOutputNodeNum.Text);
+            ImgBuild(InNodeNum, HideNodeNum, OutNodeNum);
+
+
+        }
+        void ImgBuild(int InNode, int HideNode, int OutNode)//////绘制用以表示当前网络结构的图片
+        {
+            NetWorkImg IMG = new NetWorkImg();
+            int Width = (int)IMG.image.Width;
+            int High = (int)IMG.image.Height;
+            int RoundWidth = 18;
+            int Ratio = 6;
+            Bitmap Bmp = new Bitmap(Width, High);//实例化位图图片类
+            Graphics g = Graphics.FromImage(Bmp);//实例化图形绘制类
+            int R, G, B;
+            R = 11;
+            G = 230;
+            B = 79;
+            System.Drawing.Color color = System.Drawing.Color.FromArgb(R, G, B);//颜色
+            R = 50;
+            G = 200;
+            B = 79;
+            System.Drawing.Color color2 = System.Drawing.Color.FromArgb(R, G, B);//颜色
+            System.Drawing.Pen myPen = new System.Drawing.Pen(color);//笔
+            System.Drawing.Pen myPen2 = new System.Drawing.Pen(color2);//笔
+            System.Drawing.SolidBrush myBrush = new System.Drawing.SolidBrush(color);//刷子
+            System.Drawing.SolidBrush WhiteBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);//刷子2
+            PointF[] I = new PointF[InNode];
+            PointF[] H = new PointF[HideNode];
+            PointF[] O = new PointF[OutNode];
+            for (int One = 0; One < InNode; One++)//绘制输入节点图示
+            {
+
+                if (InNode % 2 != 0)
+                {
+                    g.FillEllipse(myBrush, 50, High / 2 - RoundWidth + Ratio * One * (RoundWidth / 2), RoundWidth, RoundWidth);
+
+                }
+                else
+                {
+                    g.FillEllipse(myBrush, 50, RoundWidth + Ratio * One * (RoundWidth / 2), RoundWidth, RoundWidth);
+                    I[One].X = 50 + RoundWidth / 2;
+                    I[One].Y = RoundWidth + Ratio * One * (RoundWidth / 2) + RoundWidth / 2;
+                }
+            }
+            for (int Two = 0; Two < HideNode; Two++)//绘制隐藏节点图示
+            {
+                if (HideNode % 2 != 0)
+                {
+                    g.FillEllipse(myBrush, 50 * Ratio, High / 2 - RoundWidth + Ratio * Two * (RoundWidth / 2), RoundWidth, RoundWidth);
+
+                }
+                else
+                {
+                    g.FillEllipse(myBrush, 50 * Ratio, RoundWidth + Ratio * Two * (RoundWidth / 2), RoundWidth, RoundWidth);
+                    H[Two].X = 50 * Ratio + RoundWidth / 2;//记录点的位置
+                    H[Two].Y = RoundWidth + Ratio * Two * (RoundWidth / 2) + RoundWidth / 2;
+
+                }
+            }
+            for (int Thr = 0; Thr < OutNode; Thr++)//绘制输出节点图示
+            {
+                if (OutNode % 2 != 0)
+                {
+                    g.FillEllipse(myBrush, 50 * Ratio * (float)2.0, RoundWidth + Ratio * Thr * (RoundWidth / 2) + Width/2, RoundWidth, RoundWidth);
+                    O[Thr].X = 50 * Ratio * (float)2.0 + RoundWidth / 2;
+                    O[Thr].Y = RoundWidth + Ratio * Thr * (RoundWidth / 2) + RoundWidth / 2 + Width/2;
+
+                }
+                else
+                {
+                    g.FillEllipse(myBrush, 50 * Ratio * (float)2.0, RoundWidth + Ratio * Thr * (RoundWidth / 2), RoundWidth, RoundWidth);
+                    O[Thr].X = 50 * Ratio *(float)2.0 + RoundWidth / 2;
+                    O[Thr].Y = RoundWidth + Ratio * Thr * (RoundWidth / 2) + RoundWidth / 2;
+
+                }
+            }
+            for (int One = 0; One < InNode; One++)//绘制节点连线
+            {
+                for (int Two = 0; Two < HideNode; Two++)
+                {
+                    g.DrawLine(myPen2, I[One], H[Two]);
+                }
+            }
+            for (int Two = 0; Two < HideNode; Two++)//绘制节点连线2
+            {
+                for (int Thr = 0; Thr < OutNode; Thr++)
+                {
+                    g.DrawLine(myPen2, H[Two], O[Thr]);
+                }
+            }
+
+            Bmp.SetResolution(72, 72);
+            Bmp.Save("NetWorkImg.jpg");
+            String str = AppDomain.CurrentDomain.BaseDirectory;
+            BitmapImage image = new BitmapImage(new Uri(str + @"\NetWorkImg.jpg", UriKind.RelativeOrAbsolute));
+           
+            IMG.image.Source = image;
+            IMG.Show();
+        }
+
+        private void btSaveTrain_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            String CurrentFilename = "networksave" + now.Hour + now.Minute + now.Second + ".nwdat";
+            FileStream fs = new FileStream(CurrentFilename, FileMode.Create);
+            tbSavefileName.Text = CurrentFilename;
+            StreamWriter sw = new StreamWriter(fs);
+            sw.WriteLine("Train Filename:" + tbReadPath);
+            sw.WriteLine("Input node num:"+tbInputNodeNum.Text);
+            sw.WriteLine("Hide node num:"+tbHideNodeNum.Text);
+            sw.WriteLine("Output node num:"+tbOutputNodeNum.Text);
+            sw.WriteLine("I-H");
+                 for (int i = 0; i < InputNodeNum; i++)
+            {
+                for (int j = 0; j < HideNodeNum; j++)
+                {
+                    sw.WriteLine( "W" + i + "-" + j + "=" + HideW[j, i]  );
+                }
+            }
+            sw.WriteLine("H-O");
+            for (int i = 0; i < HideNodeNum; i++)
+            {
+                for (int j = 0; j < OutputNodeNum; j++)
+                {
+                    sw.WriteLine( "W" + i + "-" + j + "= " + OutW[j, i]);
+                }
+            }
+            tbInformation.Text += '\n' + "保存完成，文件名为:" + CurrentFilename;
+        }
+
         public double GetRandomNumber(double minimum, double maximum, int Len)   //Len小数点保留位数
         {
             int iSeed = 10;
-            Random ro = new Random(10);
+            Random ro = new Random(iSeed);
             long tick = DateTime.Now.Ticks;
             Random random = new Random((int)(tick & 0xffffffffL) | (int)(tick >> 32));
             return Math.Round(random.NextDouble() * (maximum - minimum) + minimum, Len);
@@ -319,16 +459,16 @@ namespace NeruTrainer
         void RandInitWMode2()//一种符合二项分布的赋予权重初值的方法 http://blog.csdn.net/xbinworld/article/details/50603552
         {
             Random ro = new Random();
-            double  iResult,iDownH,iUpH,iDownO,iUpO;
+            double iResult, iDownH, iUpH, iDownO, iUpO;
             iDownH = -(1 / Math.Sqrt(InputNodeNum));
-                iUpH = 1 / Math.Sqrt(InputNodeNum);
+            iUpH = 1 / Math.Sqrt(InputNodeNum);
             iDownO = -(1 / Math.Sqrt(HideNodeNum));
             iUpO = 1 / Math.Sqrt(HideNodeNum);
             for (int j = 0; j < InputNodeNum; j++)//随机初始化输入层-隐藏层权重
             {
                 for (int i = 0; i < HideNodeNum; i++)
                 {
-                    iResult = GetRandomNumber( iDownH, iUpH,8);
+                    iResult = GetRandomNumber(iDownH, iUpH, 8);
                     HideW[j, i] = iResult;
                 }
             }
@@ -343,32 +483,32 @@ namespace NeruTrainer
         }
         void TrainRun()
         {
-            
+
             for (int CurrentSample = 0; CurrentSample < SampleNum; CurrentSample++)
             {
                 InitCurrentTrainValue(CurrentSample);//向数据缓冲中输入数据
                 HideNodeDataInput();//向隐藏层输入数据，向输出层输出数据
                 CountOffset(CurrentSample);//计算当前的误差值并修正权重各个节点的权重
             }
-           
+
 
         }
         void DataDisplay()
         {
-            tbInformation.Text += "----------------训练已经完成--------------"+'\n';
-            tbInformation.Text += "当前错误率："+ Error + '\n';
+            tbInformation.Text += "----------------训练已经完成--------------" + '\n';
+            tbInformation.Text += "当前错误率：" + Error + '\n';
             tbInformation.Text += " ";
 
         }
         void WDisplay()
         {
             tbInformation.Text += "----------------当前权值显示--------------" + '\n';
-            for(int i =0;i<InputNodeNum;i++)
+            for (int i = 0; i < InputNodeNum; i++)
             {
                 for (int j = 0; j < HideNodeNum; j++)
                 {
-                    tbInformation.Text +="输入层" +i+"与隐藏层"+j+"的权W"+i+"-"+j+ "= "+HideW[j, i] + '\n';
-                 }
+                    tbInformation.Text += "输入层" + i + "与隐藏层" + j + "的权W" + i + "-" + j + "= " + HideW[j, i] + '\n';
+                }
             }
             for (int i = 0; i < HideNodeNum; i++)
             {

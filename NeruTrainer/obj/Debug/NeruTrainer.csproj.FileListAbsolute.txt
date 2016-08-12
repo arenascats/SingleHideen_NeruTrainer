@@ -26,3 +26,5 @@ C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\ob
 C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.g.resources
 C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.Properties.Resources.resources
 C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.csproj.GenerateResource.Cache
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Debug\NetWorkImg.g.cs
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Debug\NetWorkImg.baml
