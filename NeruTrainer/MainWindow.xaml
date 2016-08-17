@@ -19,11 +19,11 @@
         <Label x:Name="label" Content="输入层节点数" HorizontalAlignment="Left" Margin="260,17,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82" Foreground="White"/>
         <Label x:Name="label1" Content="隐含层节点数" HorizontalAlignment="Left" Margin="260,48,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82" Foreground="White"/>
         <Label x:Name="label2" Content="输出层节点数" HorizontalAlignment="Left" Margin="260,79,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82" Foreground="White"/>
-        <TextBox x:Name="tbInputNodeNum" HorizontalAlignment="Left" Height="23" Margin="347,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" SelectionOpacity="8" Text="4" Grid.Column="1"/>
-        <TextBox x:Name="tbHideNodeNum" HorizontalAlignment="Left" Height="23" Margin="347,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="8" Grid.Column="1"/>
-        <TextBox x:Name="tbOutputNodeNum" HorizontalAlignment="Left" Height="23" Margin="347,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="3" Grid.Column="1"/>
-        <Button x:Name="btStartTrain" Content="开始训练" HorizontalAlignment="Left" Margin="382,173,0,0" VerticalAlignment="Top" Width="85" Height="45" Click="btStartTrain_Click" Grid.Column="1" Foreground="White" Background="#33DDDDDD"/>
-        <ComboBox x:Name="cbTrigFunction" HorizontalAlignment="Left" Margin="347,117,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="21" Foreground="White">
+        <TextBox x:Name="tbInputNodeNum" HorizontalAlignment="Left" Height="23" Margin="347,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" SelectionOpacity="8" Text="4" Grid.Column="1" Background="#26FFFFFF" Foreground="White"/>
+        <TextBox x:Name="tbHideNodeNum" HorizontalAlignment="Left" Height="23" Margin="347,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="8" Grid.Column="1" Background="#26FFFFFF" Foreground="White"/>
+        <TextBox x:Name="tbOutputNodeNum" HorizontalAlignment="Left" Height="23" Margin="347,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="3" Grid.Column="1" Background="#26FFFFFF" Foreground="White"/>
+        <Button x:Name="btStartTrain" Content="文件次训练" HorizontalAlignment="Left" Margin="382,173,0,0" VerticalAlignment="Top" Width="85" Height="45" Click="btStartTrain_Click" Grid.Column="1" Foreground="White" Background="#33DDDDDD"/>
+        <ComboBox x:Name="cbTrigFunction" HorizontalAlignment="Left" Margin="347,117,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="21" Foreground="Black">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -43,9 +43,14 @@
         <Button x:Name="btDisplayW" Content="当前权值显示" Grid.Column="1" HorizontalAlignment="Left" Margin="283,173,0,0" VerticalAlignment="Top" Width="86" Height="45" Click="button_Click_1" IsEnabled="False" Foreground="White" Background="#34DDDDDD"/>
         <Button x:Name="btTest" Content="Test" Grid.Column="1" HorizontalAlignment="Left" Margin="382,231,0,0" VerticalAlignment="Top" Width="85" Click="btTest_Click" Background="#33DDDDDD" Foreground="White"/>
         <Button x:Name="btDisnetwork" Content="图示网络结构" Grid.Column="1" HorizontalAlignment="Left" Margin="283,231,0,0" VerticalAlignment="Top" Width="85" Click="btDisNetwork_Click" Foreground="White" Background="#33DDDDDD"/>
-        <Button x:Name="button" Content="神经网络验证机" Grid.Column="1" HorizontalAlignment="Left" Margin="283,266,0,0" VerticalAlignment="Top" Width="184" Height="56" Background="#33DDDDDD" Foreground="White"/>
-        <Button x:Name="btTestData" Content="验证" Grid.Column="1" HorizontalAlignment="Left" Margin="392,339,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="btTestData_Click" Foreground="White" Background="#4CDDDDDD"/>
-        <TextBox x:Name="tbManInput" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="10,339,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370" Foreground="White" BorderBrush="#FFB8B8B8" Background="#26FFFFFF" FontSize="13"/>
+        <Button x:Name="btAutoRuntrain" Content="自动训练" Grid.Column="1" HorizontalAlignment="Left" Margin="283,266,0,0" VerticalAlignment="Top" Width="184" Height="56" Background="#33DDDDDD" Foreground="White" FontSize="20" Click="button_Click_2"/>
+        <Button x:Name="btTestData" Content="验证" Grid.Column="1" HorizontalAlignment="Left" Margin="392,372,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="btTestData_Click" Foreground="White" Background="#4CDDDDDD"/>
+        <TextBox x:Name="tbManInput" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="10,372,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370" Foreground="White" BorderBrush="#FFB8B8B8" Background="#26FFFFFF" FontSize="15"/>
+        <TextBox x:Name="tbLimitValue" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="108,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="#26FFFFFF" Foreground="White" Text="0.001"/>
+        <Label x:Name="label3" Content="收敛临界值" Grid.Column="1" HorizontalAlignment="Left" Margin="0,275,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <TextBox x:Name="tbMaxTime" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="108,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="White" Background="#26FFFFFF" Text="100000"/>
+        <Label x:Name="label8" Content="最大自动训练次" Grid.Column="1" HorizontalAlignment="Left" Margin="1,317,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Button x:Name="btClear" Content="" HorizontalAlignment="Left" Margin="453,531,0,0" VerticalAlignment="Top" Width="75" Height="32" Background="#00DDDDDD" Foreground="#19FFFFFF" BorderBrush="#009B9B9B" Click="btClear_Click"/>
 
     </Grid>
 </Window>

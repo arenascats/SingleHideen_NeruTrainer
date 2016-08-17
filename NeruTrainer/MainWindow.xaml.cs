@@ -54,6 +54,7 @@ namespace NeruTrainer
         private double[] HideOffset = new double[15];
         double e;//误差
         private double Error;
+        private double ErrorC = 1;
 
         public MainWindow()
         {
@@ -100,7 +101,7 @@ namespace NeruTrainer
             string FileName = "";
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-            openFileDialog1.Filter = "文本文件(*.txt)|*.txt|(*.rtf)|*.rtf";
+            openFileDialog1.Filter = "文本文件(*.txt)|*.txt|CSV表格(*.csv)|*.csv";
             if (openFileDialog1.ShowDialog() == true)
             {
                 try
@@ -148,13 +149,13 @@ namespace NeruTrainer
                     cut = Regex.Split(line, ",", RegexOptions.IgnoreCase);//按照逗号切割字符串并保存
                     for (int i = 0; i < innode; i++)
                     {
-                        if (reg.IsMatch(cut[i]))
+                       // if (reg.IsMatch(cut[i]))
                             InputData[SampleNumCount, i] = Convert.ToDouble(cut[i]);
 
                     }
                     for (int j = 0; j < outnode; j++)
                     {
-                        if (reg.IsMatch(cut[j]))
+                      //  if (reg.IsMatch(cut[j]))
                             OutputData[SampleNumCount, j] = Convert.ToDouble(cut[innode + j]);
                     }
                     SampleNumCount++;
@@ -285,18 +286,19 @@ namespace NeruTrainer
                 e += Math.Abs(OutputData[Sample, k] - CurrentOutOutputValue[k]) * Math.Abs(OutputData[Sample, k] - CurrentOutOutputValue[k]);
             }
             Error = e / 2.0;
+            ErrorC = Error;
             //  if (Sample % 50 == 0)   tbInformation.Text += "\n输出数据:" + CurrentOutOutputValue[k];
-            if(Convert.ToInt32( tbReTime.Text) <2)
-            if (Sample % 50 == 0 || Sample == 149 )
-            {
-                for (int i = 0; i < OutputNodeNum; i++)
-                {
-                    tbInformation.Text += "\n";
-                    tbInformation.Text += "NODEOUT:" + i + ": " + CurrentOutOutputValue[i];
-                }
-                tbInformation.Text += "\n";
+            //if(Convert.ToInt32( tbReTime.Text) <2)//DEBUG使用，用于显示输出数据
+            //if (Sample % 50 == 0 || Sample == 149 )
+            //{
+            //    for (int i = 0; i < OutputNodeNum; i++)
+            //    {
+            //        tbInformation.Text += "\n";
+            //        tbInformation.Text += "NODEOUT:" + i + ": " + CurrentOutOutputValue[i];
+            //    }
+            //    tbInformation.Text += "\n";
 
-            }
+            //}
         }
 
         private void btDisNetwork_Click(object sender, RoutedEventArgs e)
@@ -520,6 +522,35 @@ namespace NeruTrainer
             {
                 tbInformation.Text += "\n" + " 输出节点" + outer + ": " + CurrentOutOutputValue[outer];
             }
+        }
+
+        private void button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (BeenInit == 1)
+            {
+                Init();
+                RandInitWMode2();
+                BeenInit = 0;
+            }
+
+            for (int time = 0; ErrorC > Convert.ToDouble(tbLimitValue.Text); time++)
+            {
+                TrainRun();
+                if(time > Convert.ToInt64(tbMaxTime.Text))
+                {
+                    tbInformation.Text += "\n\n错误，无法收敛到指定值\n";
+                    break;
+                }
+            }
+            DataDisplay();
+
+            btDisplayW.IsEnabled = true;
+            btSaveTrain.IsEnabled = true;
+        }
+
+        private void btClear_Click(object sender, RoutedEventArgs e)
+        {
+            tbInformation.Text = "";
         }
 
         public double GetRandomNumber(double minimum, double maximum, int Len)   //Len小数点保留位数
