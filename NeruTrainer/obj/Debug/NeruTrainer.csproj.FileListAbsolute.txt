@@ -28,3 +28,19 @@ C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\ob
 C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.csproj.GenerateResource.Cache
 C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Debug\NetWorkImg.g.cs
 C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Debug\NetWorkImg.baml
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\bin\Debug\NeruTrainer.exe.config
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.exe
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.pdb
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\bin\Debug\NeruTrainer.exe
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\bin\Debug\NeruTrainer.pdb
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.csprojResolveAssemblyReference.cache
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\MainWindow.g.cs
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NetWorkImg.g.cs
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\App.g.cs
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer_MarkupCompile.cache
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer_MarkupCompile.lref
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\MainWindow.baml
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NetWorkImg.baml
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.g.resources
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.Properties.Resources.resources
+C:\Users\ZX\Desktop\Projects\NeruTrainer\NeruTrainer\obj\Debug\NeruTrainer.csproj.GenerateResource.Cache

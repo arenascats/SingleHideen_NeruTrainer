@@ -1,0 +1,42 @@
+﻿<Window x:Class="NeruTrainer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NeruTrainer"
+        mc:Ignorable="d"
+        Title="神经网络训练机" Height="542" Width="1104">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="283*"/>
+            <ColumnDefinition Width="265*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="tbReadPath" HorizontalAlignment="Left" Height="23" Margin="108,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <Button x:Name="btReadTrain" Content="读取训练数据" HorizontalAlignment="Left" Margin="1,67,0,0" VerticalAlignment="Top" Width="84" Click="button_Click" Height="22" Background="#FFE4E4E4" Foreground="#FF190707" Grid.Column="1"/>
+        <TextBox x:Name="tbSavefileName" HorizontalAlignment="Left" Height="23" Margin="108,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <Button x:Name="btSaveTrain" Content="保存训练结果" HorizontalAlignment="Left" Margin="1,110,0,0" VerticalAlignment="Top" Width="84" Height="22" Grid.Column="1" Click="btSaveTrain_Click"/>
+        <TextBox x:Name="tbInformation" Height="456" Margin="41,19,35,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="输入层节点数" HorizontalAlignment="Left" Margin="260,17,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82"/>
+        <Label x:Name="label1" Content="隐含层节点数" HorizontalAlignment="Left" Margin="260,48,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82"/>
+        <Label x:Name="label2" Content="输出层节点数" HorizontalAlignment="Left" Margin="260,79,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82"/>
+        <TextBox x:Name="tbInputNodeNum" HorizontalAlignment="Left" Height="23" Margin="347,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" SelectionOpacity="8" Text="4" Grid.Column="1"/>
+        <TextBox x:Name="tbHideNodeNum" HorizontalAlignment="Left" Height="23" Margin="347,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="8" Grid.Column="1"/>
+        <TextBox x:Name="tbOutputNodeNum" HorizontalAlignment="Left" Height="23" Margin="347,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="2" Grid.Column="1"/>
+        <Button x:Name="btStartTrain" Content="开始训练" HorizontalAlignment="Left" Margin="382,173,0,0" VerticalAlignment="Top" Width="85" Height="45" Click="btStartTrain_Click" Grid.Column="1"/>
+        <ComboBox x:Name="cbTrigFunction" HorizontalAlignment="Left" Margin="347,117,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="21"/>
+        <Label x:Name="label4" Content="激活函数" HorizontalAlignment="Left" Margin="283,117,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="58"/>
+        <Label x:Name="label5" Content="隐藏层权重速率" HorizontalAlignment="Left" Margin="1,148,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="94"/>
+        <TextBox x:Name="tbRateHide" HorizontalAlignment="Left" Height="23" Margin="108,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Text="0.05"/>
+        <TextBox x:Name="tbRateOut" HorizontalAlignment="Left" Height="23" Margin="108,191,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Text="0.05"/>
+        <Label x:Name="label6" Content="输出层权重速率" HorizontalAlignment="Left" Margin="1,189,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="94"/>
+        <TextBox x:Name="tbReTime" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="108,233,0,0" TextWrapping="Wrap" Text="20" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="label7" Content="迭代次数" Grid.Column="1" HorizontalAlignment="Left" Margin="27,231,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.225,0.32" Height="25" Width="58"/>
+        <Button x:Name="btReadTrainW" Content="读取训练结果" Grid.Column="1" HorizontalAlignment="Left" Margin="1,23,0,0" VerticalAlignment="Top" Width="84" Height="19"/>
+        <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="108,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btDisplayW" Content="当前权值显示" Grid.Column="1" HorizontalAlignment="Left" Margin="283,173,0,0" VerticalAlignment="Top" Width="86" Height="45" Click="button_Click_1"/>
+        <Button x:Name="btTest" Content="Test" Grid.Column="1" HorizontalAlignment="Left" Margin="382,231,0,0" VerticalAlignment="Top" Width="85" Click="btTest_Click"/>
+        <Button x:Name="btDisnetwork" Content="图示网络结构" Grid.Column="1" HorizontalAlignment="Left" Margin="283,231,0,0" VerticalAlignment="Top" Width="85" Click="btDisNetwork_Click"/>
+        <Button x:Name="button" Content="神经网络验证机" Grid.Column="1" HorizontalAlignment="Left" Margin="283,266,0,0" VerticalAlignment="Top" Width="184" Height="56"/>
+
+    </Grid>
+</Window>

@@ -37,6 +37,12 @@ namespace NeruTrainer
         public double[,] OutW = new double[15, 15];//各个隐含节点到输出层
         public double Rate_InputToHideW = 0.05;//权重变化率
         public double Rate_HideToOutW = 0.05;//权重变化率
+        public double Rate_ThresholdIH = 0.05;
+        public double Rate_ThresholdHO = 0.05;
+
+        public double[] IHThreshold = new double[50];
+        public double[] HOThreshold = new double[50];
+
         private int InputNodeNum, OutputNodeNum, HideNodeNum; //隐藏层节点数
         private double[] TrainInputValue = new double[15];
         private double[] TrainOutputValue = new double[15];
@@ -46,6 +52,7 @@ namespace NeruTrainer
         private double[] CurrentOutOutputValue = new double[15];
         private double[] OutputOffset = new double[15];
         private double[] HideOffset = new double[15];
+        double e;//误差
         private double Error;
 
         public MainWindow()
@@ -198,122 +205,92 @@ namespace NeruTrainer
             for (int j = 0; j < HideNodeNum; j++)//输入层到隐含层
             {
                 CurrentHideInputValue[j] = 0.0;
+                for (int i = 0; i < InputNodeNum; i++)
+                    CurrentHideInputValue[i] = CurrentHideInputValue[i] + HideW[j, i] * TrainInputValue[j];
 
                 if (CurrentTrigFunction == Liner)//激活函数为线性函数
                 {
-                    for (int i = 0; i < InputNodeNum; i++)
-                    {
-                        CurrentHideInputValue[i] = CurrentHideInputValue[i] + HideW[j, i] * TrainInputValue[j];
-                        CurrentHideOutputValue[i] = MyFunc.Liner(HideW[j, i], CurrentHideInputValue[j], 0);
-                    }
+                    CurrentHideOutputValue[j] = MyFunc.Liner(HOThreshold[j], CurrentHideInputValue[j], 0);
                 }
                 else if (CurrentTrigFunction == Sigmoid)
                 {
-                    for (int i = 0; i < InputNodeNum; i++)
-                    {
-                        CurrentHideInputValue[i] = CurrentHideInputValue[i] + HideW[j, i] * TrainInputValue[j];
-                        CurrentHideOutputValue[i] = MyFunc.Sigmoid(CurrentHideInputValue[j], HideW[j, i]);
-                    }
+                    CurrentHideOutputValue[j] = MyFunc.Sigmoid(CurrentHideInputValue[j], IHThreshold[j]);
                 }
                 else if (CurrentTrigFunction == DoubleSigmoid)//激活函数为双S型函数
                 {
-                    for (int i = 0; i < InputNodeNum; i++)
-                    {
-                        CurrentHideInputValue[i] = CurrentHideInputValue[i] + HideW[j, i] * TrainInputValue[j];
-                        CurrentHideOutputValue[i] = MyFunc.DoubleSigmoid(CurrentHideInputValue[j], HideW[j, i]);
-                    }
+                    CurrentHideOutputValue[j] = MyFunc.DoubleSigmoid(CurrentHideInputValue[j], IHThreshold[j]);
                 }
             }
             for (int k = 0; k < OutputNodeNum; k++)//隐含层到输出层
             {
                 CurrentOutInputValue[k] = 0.0;
                 for (int m = 0; m < HideNodeNum; m++)
+                    CurrentOutInputValue[k] = CurrentOutInputValue[k] + OutW[k, m] * CurrentHideInputValue[m];
+                if (CurrentTrigFunction == Liner)//激活函数为线性函数
                 {
-                    if (CurrentTrigFunction == Liner)//激活函数为线性函数
-                    {
-                        CurrentOutInputValue[k] = CurrentOutInputValue[k] + OutW[k, m] * CurrentHideInputValue[m];
-                        CurrentOutOutputValue[k] = MyFunc.Liner(HideW[k, m], CurrentOutInputValue[k], 0);
-                    }
-                    else if (CurrentTrigFunction == Sigmoid)//激活函数为S型函数
-                    {
-                        CurrentOutInputValue[k] = CurrentOutInputValue[k] + OutW[k, m] * CurrentHideInputValue[m];
-                        CurrentOutOutputValue[k] = MyFunc.Sigmoid(CurrentOutInputValue[k], HideW[k, m]);
-                    }
-                    else if (CurrentTrigFunction == DoubleSigmoid)//激活函数为双S型函数
-                    {
-                        CurrentOutInputValue[k] = CurrentOutInputValue[k] + OutW[k, m] * CurrentHideInputValue[m];
-                        CurrentOutOutputValue[k] = MyFunc.DoubleSigmoid(CurrentOutInputValue[k], HideW[k, m]);
-                    }
+
+                    CurrentOutOutputValue[k] = MyFunc.Liner(HOThreshold[k], CurrentOutInputValue[k], 0);
                 }
+                else if (CurrentTrigFunction == Sigmoid)//--------------------激活函数为S型函数
+                {
+                    CurrentOutOutputValue[k] = MyFunc.Sigmoid(CurrentOutInputValue[k], HOThreshold[k]);//这里有问题
+                }
+                else if (CurrentTrigFunction == DoubleSigmoid)//激活函数为双S型函数
+                {
+
+                    CurrentOutOutputValue[k] = MyFunc.DoubleSigmoid(CurrentOutInputValue[k], HOThreshold[k]);
+                }
+
             }
+             
 
 
         }
         void CountOffset(int Sample)//对隐藏层和输出层的误差进行计算
         {
-            double e = 0;//误差
+            e = 0;
             for (int p = 0; p < OutputNodeNum; p++)//计算训练样本输出与实际输出的误差
             {
-                OutputOffset[p] = (OutputData[Sample, p] - CurrentOutOutputValue[p]) * CurrentOutOutputValue[p] * (1 - CurrentOutOutputValue[p]); ////这部分的1- 需要考虑
+                   OutputOffset[p] =  (OutputData[Sample, p] - CurrentOutOutputValue[p]) * CurrentOutOutputValue[p] * (1 - CurrentOutOutputValue[p]);
+              //  OutputOffset[p] = OutputData[Sample, p] - CurrentOutOutputValue[p];
                 for (int k = 0; k < HideNodeNum; k++)
                 {
-                    OutW[k, p] += Rate_HideToOutW * OutputOffset[p] * CurrentHideOutputValue[p];//下一次运算隐含层和输出层的连接的权值
-
+                   OutW[k, p] = OutW[k, p] + Rate_HideToOutW * OutputOffset[p] * CurrentHideOutputValue[k];//下一次运算隐含层和输出层的连接的权值
+                //   OutW[k, p] = OutW[k, p] + Rate_HideToOutW *(OutputData[Sample,p] - CurrentOutOutputValue[p] )* CurrentHideOutputValue[k];//下一次运算隐含层和输出层的连接的权值
                 }
             }
+
             for (int p = 0; p < HideNodeNum; p++)
             {
                 HideOffset[p] = 0.0;
                 for (int k = 0; k < OutputNodeNum; k++)
                 {
-                    HideOffset[p] = HideOffset[p] + OutputOffset[k] * OutW[p, k];
+                    HideOffset[p] = HideOffset[p] + OutputOffset[k] * OutW[p, k];//
                 }
                 HideOffset[p] = HideOffset[p] * CurrentHideOutputValue[p] * (1 - CurrentHideOutputValue[p]);//隐藏层误差值计算////这里的1- 需要考虑
                 for (int i = 0; i < InputNodeNum; i++)
                 {
-                    HideW[i, p] += Rate_InputToHideW * HideOffset[i]; //下一次运算输入层和隐藏层的连接的权值
+                    HideW[i, p] += Rate_InputToHideW * HideOffset[p] * InputData[Sample,i]; //下一次运算输入层和隐藏层的连接的权值
+                //    HideW[i, p] = HideW[i, p]+ Rate_InputToHideW * CurrentHideOutputValue[p] * (1 - CurrentHideOutputValue[p]) * CurrentHideInputValue[p] * 
+                        
                 }
             }
+            for (int k = 0; k < OutputNodeNum; k++)
+                HOThreshold[k] = HOThreshold[k] + Rate_ThresholdHO * OutputOffset[k]; //下一次的隐含层和输出层之间的新阈值  
+            for (int j = 0; j < HideNodeNum; j++)
+                IHThreshold[j] = IHThreshold[j] + Rate_ThresholdIH * HideOffset[j]; //下一次的输入层和隐含层之间的新阈值
+
+
             for (int k = 0; k < OutputNodeNum; k++)
             {
                 e += Math.Abs(OutputData[Sample, k] - CurrentOutOutputValue[k]) * Math.Abs(OutputData[Sample, k] - CurrentOutOutputValue[k]);
             }
             Error = e / 2.0;
         }
-        void RandInitW()
-        {
-
-            Random rand = new Random();
-            int Seed = 10;
-            Random ro = new Random(10);
-            long tick = DateTime.Now.Ticks;
-            Random ran = new Random((int)(tick & 0xffffffffL) | (int)(tick >> 32));
-            for (int j = 0; j < InputNodeNum; j++)//随机初始化输入层-隐藏层权重
-            {
-                for (int i = 0; i < HideNodeNum; i++)
-                {
-                    int RAND2 = ran.Next(100);
-                    Thread.Sleep(10);
-                    int RAND = rand.Next(100);
-                    HideW[j, i] = ((2.0 * RAND) / RAND2) - 1;
-                }
-            }
-
-            for (int j = 0; j < HideNodeNum; j++)//初始化隐藏层-输出层权重
-            {
-                for (int i = 0; i < OutputNodeNum; i++)
-                {
-                    int RAND2 = ran.Next(100);
-                    Thread.Sleep(10);
-                    int RAND = rand.Next(100);
-                    OutW[j, i] = ((2.0 * RAND) / RAND2) - 1;
-                }
-            }
-        }
-
+       
         private void btDisNetwork_Click(object sender, RoutedEventArgs e)
         {
-            int ImageDrawRatio = 3;
+       //     int ImageDrawRatio = 3;
             int InNodeNum = Convert.ToInt16(tbInputNodeNum.Text);
             int HideNodeNum = Convert.ToInt16(tbHideNodeNum.Text);
             int OutNodeNum = Convert.ToInt16(tbOutputNodeNum.Text);
@@ -380,15 +357,15 @@ namespace NeruTrainer
             {
                 if (OutNode % 2 != 0)
                 {
-                    g.FillEllipse(myBrush, 50 * Ratio * (float)2.0, RoundWidth + Ratio * Thr * (RoundWidth / 2) + Width/2, RoundWidth, RoundWidth);
+                    g.FillEllipse(myBrush, 50 * Ratio * (float)2.0, RoundWidth + Ratio * Thr * (RoundWidth / 2) + Width / 2, RoundWidth, RoundWidth);
                     O[Thr].X = 50 * Ratio * (float)2.0 + RoundWidth / 2;
-                    O[Thr].Y = RoundWidth + Ratio * Thr * (RoundWidth / 2) + RoundWidth / 2 + Width/2;
+                    O[Thr].Y = RoundWidth + Ratio * Thr * (RoundWidth / 2) + RoundWidth / 2 + Width / 2;
 
                 }
                 else
                 {
                     g.FillEllipse(myBrush, 50 * Ratio * (float)2.0, RoundWidth + Ratio * Thr * (RoundWidth / 2), RoundWidth, RoundWidth);
-                    O[Thr].X = 50 * Ratio *(float)2.0 + RoundWidth / 2;
+                    O[Thr].X = 50 * Ratio * (float)2.0 + RoundWidth / 2;
                     O[Thr].Y = RoundWidth + Ratio * Thr * (RoundWidth / 2) + RoundWidth / 2;
 
                 }
@@ -409,10 +386,13 @@ namespace NeruTrainer
             }
 
             Bmp.SetResolution(72, 72);
-            Bmp.Save("NetWorkImg.jpg");
+            DateTime now = DateTime.Now;//时间方式来命名图片
+            String CurrentFilename = "networksave" + now.Hour + now.Minute + now.Second + ".nwdat";
+
+            Bmp.Save("NetworkImg" + CurrentFilename + ".jpg");
             String str = AppDomain.CurrentDomain.BaseDirectory;
-            BitmapImage image = new BitmapImage(new Uri(str + @"\NetWorkImg.jpg", UriKind.RelativeOrAbsolute));
-           
+            BitmapImage image = new BitmapImage(new Uri(str + @"\NetworkImg" + CurrentFilename + ".jpg", UriKind.RelativeOrAbsolute));
+
             IMG.image.Source = image;
             IMG.Show();
         }
@@ -425,16 +405,16 @@ namespace NeruTrainer
             tbSavefileName.Text = CurrentFilename;
             StreamWriter sw = new StreamWriter(fs);
             sw.WriteLine("Train Filename:" + tbReadPath.Text);
-            sw.WriteLine("Input node num:"+tbInputNodeNum.Text);
-            sw.WriteLine("Hide node num:"+tbHideNodeNum.Text);
-            sw.WriteLine("Output node num:"+tbOutputNodeNum.Text);
+            sw.WriteLine("Input node num:" + tbInputNodeNum.Text);
+            sw.WriteLine("Hide node num:" + tbHideNodeNum.Text);
+            sw.WriteLine("Output node num:" + tbOutputNodeNum.Text);
             sw.WriteLine("I-H");
-                 for (int i = 0; i < InputNodeNum; i++)
+            for (int i = 0; i < InputNodeNum; i++)
             {
                 for (int j = 0; j < HideNodeNum; j++)
                 {
-                  sw.WriteLine("W" + i + "-" + j + "=" + HideW[j, i]);
-                   // sw.WriteLine("输入层" + i + "与隐藏层" + j + "的权W" + i + "-" + j + "= " + HideW[j, i]);
+                    sw.WriteLine("W" + i + "-" + j + "=" + HideW[j, i]);
+                    // sw.WriteLine("输入层" + i + "与隐藏层" + j + "的权W" + i + "-" + j + "= " + HideW[j, i]);
                 }
             }
             sw.WriteLine("H-O");
@@ -482,6 +462,21 @@ namespace NeruTrainer
                     OutW[j, i] = iResult;
                 }
             }
+
+            for (int i = 0; i < HideNodeNum; i++)
+            //隐含层阀值
+            {
+                iResult = GetRandomNumber(iDownO, iUpO, 8);
+                IHThreshold[i] = iResult;
+            }
+            for (int i = 0; i < OutputNodeNum; i++)
+            //   输出层阀值
+            {
+                iResult = GetRandomNumber(iDownO, iUpO, 8);
+                HOThreshold[i] = iResult;
+            }
+
+
         }
         void TrainRun()
         {
