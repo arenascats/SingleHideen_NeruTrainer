@@ -48,7 +48,13 @@ namespace NeruTrainer
         public double Sigmoid(double x, double a)
         {
             double Output = 0;
-            Output = 1 / (1 + Math.Exp(-x -a));
+            Output = 1.0 / (1.0 + Math.Exp(-x -a));
+            return Output;
+        }
+        public double Sigmoidnob(double x)
+        {
+            double Output = 0;
+            Output = 1.0 / (1.0 + Math.Exp(-x));
             return Output;
         }
         public double DoubleSigmoid(double x, double a)
