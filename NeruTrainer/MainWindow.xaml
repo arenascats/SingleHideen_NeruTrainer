@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeruTrainer"
         mc:Ignorable="d"
-        Title="神经网络训练机" Height="623" Width="1104" Background="#FF272727">
+        Title="神经网络训练机" Height="667" Width="1104" Background="#FF272727">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="283*"/>
@@ -15,7 +15,7 @@
         <Button x:Name="btReadTrain" Content="读取训练数据" HorizontalAlignment="Left" Margin="1,67,0,0" VerticalAlignment="Top" Width="84" Click="button_Click" Height="22" Background="#33E4E4E4" Foreground="White" Grid.Column="1"/>
         <TextBox x:Name="tbSavefileName" HorizontalAlignment="Left" Height="23" Margin="108,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Background="#26FFFFFF" Foreground="White"/>
         <Button x:Name="btSaveTrain" Content="保存训练结果" HorizontalAlignment="Left" Margin="1,110,0,0" VerticalAlignment="Top" Width="84" Height="22" Grid.Column="1" Click="btSaveTrain_Click" IsEnabled="False" Background="#33DDDDDD" Foreground="White"/>
-        <TextBox x:Name="tbInformation" Height="535" Margin="38,28,38,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#3BFFFFFF"/>
+        <TextBox x:Name="tbInformation" Height="567" Margin="38,28,38,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#3BFFFFFF"/>
         <Label x:Name="label" Content="输入层节点数" HorizontalAlignment="Left" Margin="260,17,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82" Foreground="White"/>
         <Label x:Name="label1" Content="隐含层节点数" HorizontalAlignment="Left" Margin="260,48,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82" Foreground="White"/>
         <Label x:Name="label2" Content="输出层节点数" HorizontalAlignment="Left" Margin="260,79,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82" Foreground="White"/>
@@ -44,13 +44,29 @@
         <Button x:Name="btTest" Content="Test" Grid.Column="1" HorizontalAlignment="Left" Margin="382,231,0,0" VerticalAlignment="Top" Width="85" Click="btTest_Click" Background="#33DDDDDD" Foreground="White"/>
         <Button x:Name="btDisnetwork" Content="图示网络结构" Grid.Column="1" HorizontalAlignment="Left" Margin="283,231,0,0" VerticalAlignment="Top" Width="85" Click="btDisNetwork_Click" Foreground="White" Background="#33DDDDDD"/>
         <Button x:Name="btAutoRuntrain" Content="自动训练" Grid.Column="1" HorizontalAlignment="Left" Margin="283,266,0,0" VerticalAlignment="Top" Width="184" Height="56" Background="#33DDDDDD" Foreground="White" FontSize="20" Click="button_Click_2"/>
-        <Button x:Name="btTestData" Content="验证" Grid.Column="1" HorizontalAlignment="Left" Margin="392,372,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="btTestData_Click" Foreground="White" Background="#4CDDDDDD"/>
-        <TextBox x:Name="tbManInput" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="10,372,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370" Foreground="White" BorderBrush="#FFB8B8B8" Background="#26FFFFFF" FontSize="15"/>
+        <Button x:Name="btTestData" Content="验证" Grid.Column="1" HorizontalAlignment="Left" Margin="392,361,0,0" VerticalAlignment="Top" Width="75" Height="28" Click="btTestData_Click" Foreground="White" Background="#4CDDDDDD"/>
+        <TextBox x:Name="tbManInput" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="1,361,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="370" Foreground="White" BorderBrush="#FFB8B8B8" Background="#26FFFFFF" FontSize="15"/>
         <TextBox x:Name="tbLimitValue" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="108,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Background="#26FFFFFF" Foreground="White" Text="0.001"/>
         <Label x:Name="label3" Content="收敛临界值" Grid.Column="1" HorizontalAlignment="Left" Margin="0,275,0,0" VerticalAlignment="Top" Foreground="White"/>
         <TextBox x:Name="tbMaxTime" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="108,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="White" Background="#26FFFFFF" Text="100000"/>
         <Label x:Name="label8" Content="最大自动训练次" Grid.Column="1" HorizontalAlignment="Left" Margin="1,317,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Button x:Name="btClear" Content="" HorizontalAlignment="Left" Margin="453,531,0,0" VerticalAlignment="Top" Width="75" Height="32" Background="#00DDDDDD" Foreground="#19FFFFFF" BorderBrush="#009B9B9B" Click="btClear_Click"/>
+        <TabControl x:Name="tabControl" Grid.Column="1" HorizontalAlignment="Left" Height="171" Margin="10,424,0,0" VerticalAlignment="Top" Width="457" Background="#33FFFFFF">
+            <TabItem Header="下位机连接" BorderBrush="#33ACACAC" Background="#26000000" Foreground="#FF6C6C6C">
+                <Grid Background="#FF4F4F4F" Margin="0,0,0,-1">
+                    <Button x:Name="btLink" Content="连接" HorizontalAlignment="Left" Margin="355,10,0,0" VerticalAlignment="Top" Width="86" Height="52" Foreground="White" Background="#FF3A3A3A" FontSize="18"/>
+                    <Button x:Name="btCheckState" Content="状态检测" HorizontalAlignment="Left" Margin="355,67,0,0" VerticalAlignment="Top" Width="86" Height="35" Foreground="White" Background="#FF3A3A3A"/>
+                    <ComboBox x:Name="cbPort" HorizontalAlignment="Left" Margin="221,10,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox x:Name="cbBaud" HorizontalAlignment="Left" Margin="221,41,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="label9" Content="串口号" HorizontalAlignment="Left" Margin="157,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+                    <Label x:Name="label10" Content="波特率" HorizontalAlignment="Left" Margin="157,40,0,0" VerticalAlignment="Top" Foreground="White"/>
+                    <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="62" Margin="10,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331" Foreground="White" Background="#33FFFFFF"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="控制" BorderBrush="#33ACACAC" Background="#FF5D5D5D" Foreground="#FF898989">
+                <Grid Background="#FF4F4F4F"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
