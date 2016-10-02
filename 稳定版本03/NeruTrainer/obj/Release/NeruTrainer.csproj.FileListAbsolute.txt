@@ -1,0 +1,15 @@
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\bin\Release\NeruTrainer.exe.config
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\bin\Release\NeruTrainer.exe
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\bin\Release\NeruTrainer.pdb
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\MainWindow.g.cs
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\NetWorkImg.g.cs
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\App.g.cs
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\NeruTrainer_MarkupCompile.cache
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\NeruTrainer_MarkupCompile.lref
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\MainWindow.baml
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\NetWorkImg.baml
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\NeruTrainer.g.resources
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\NeruTrainer.Properties.Resources.resources
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\NeruTrainer.csproj.GenerateResource.Cache
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\NeruTrainer.exe
+C:\Users\Farell\Documents\Visual Studio 2015\Projects\NeruTrainer\NeruTrainer\obj\Release\NeruTrainer.pdb

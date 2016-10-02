@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeruTrainer"
         mc:Ignorable="d"
-        Title="神经网络训练机" Height="667" Width="1104" Background="#FF272727">
+        Title="神经网络训练机" Height="824" Width="1104" Background="#FF272727">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="283*"/>
@@ -15,7 +15,7 @@
         <Button x:Name="btReadTrain" Content="读取训练数据" HorizontalAlignment="Left" Margin="1,67,0,0" VerticalAlignment="Top" Width="84" Click="button_Click" Height="22" Background="#33E4E4E4" Foreground="White" Grid.Column="1"/>
         <TextBox x:Name="tbSavefileName" HorizontalAlignment="Left" Height="23" Margin="108,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Background="#26FFFFFF" Foreground="White"/>
         <Button x:Name="btSaveTrain" Content="保存训练结果" HorizontalAlignment="Left" Margin="1,110,0,0" VerticalAlignment="Top" Width="84" Height="22" Grid.Column="1" Click="btSaveTrain_Click" IsEnabled="False" Background="#33DDDDDD" Foreground="White"/>
-        <TextBox x:Name="tbInformation" Height="567" Margin="38,28,38,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#3BFFFFFF"/>
+        <TextBox x:Name="tbInformation" Height="580" Margin="38,28,38,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#3BFFFFFF"/>
         <Label x:Name="label" Content="输入层节点数" HorizontalAlignment="Left" Margin="260,17,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82" Foreground="White"/>
         <Label x:Name="label1" Content="隐含层节点数" HorizontalAlignment="Left" Margin="260,48,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82" Foreground="White"/>
         <Label x:Name="label2" Content="输出层节点数" HorizontalAlignment="Left" Margin="260,79,0,0" VerticalAlignment="Top" Grid.Column="1" Height="25" Width="82" Foreground="White"/>
@@ -51,9 +51,9 @@
         <TextBox x:Name="tbMaxTime" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="108,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="White" Background="#26FFFFFF" Text="100000"/>
         <Label x:Name="label8" Content="最大自动训练次" Grid.Column="1" HorizontalAlignment="Left" Margin="1,317,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Button x:Name="btClear" Content="" HorizontalAlignment="Left" Margin="453,531,0,0" VerticalAlignment="Top" Width="75" Height="32" Background="#00DDDDDD" Foreground="#19FFFFFF" BorderBrush="#009B9B9B" Click="btClear_Click"/>
-        <TabControl x:Name="tabControl" Grid.Column="1" HorizontalAlignment="Left" Height="171" Margin="10,424,0,0" VerticalAlignment="Top" Width="457" Background="#33FFFFFF">
+        <TabControl x:Name="tabControl" Grid.Column="1" HorizontalAlignment="Left" Height="184" Margin="10,424,0,0" VerticalAlignment="Top" Width="457" Background="#33FFFFFF">
             <TabItem Header="下位机连接" BorderBrush="#33ACACAC" Background="#26000000" Foreground="#FF6C6C6C">
-                <Grid Background="#FF4F4F4F" Margin="0,0,0,-1">
+                <Grid Background="#FF424242" Margin="0,0,0,-1">
                     <Button x:Name="btLink" Content="连接" HorizontalAlignment="Left" Margin="355,10,0,0" VerticalAlignment="Top" Width="86" Height="52" Foreground="White" Background="#FF3A3A3A" FontSize="18"/>
                     <Button x:Name="btCheckState" Content="状态检测" HorizontalAlignment="Left" Margin="355,67,0,0" VerticalAlignment="Top" Width="86" Height="35" Foreground="White" Background="#FF3A3A3A"/>
                     <ComboBox x:Name="cbPort" HorizontalAlignment="Left" Margin="221,10,0,0" VerticalAlignment="Top" Width="120"/>
@@ -63,8 +63,31 @@
                     <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="62" Margin="10,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331" Foreground="White" Background="#33FFFFFF"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="控制" BorderBrush="#33ACACAC" Background="#FF5D5D5D" Foreground="#FF898989">
-                <Grid Background="#FF4F4F4F"/>
+            <TabItem Header="神经网络配置" BorderBrush="#33ACACAC" Background="#FF424040" Foreground="#FF555555">
+                <Grid Background="#FF424242">
+                    <Button x:Name="btOption1_R" Content="读取配置1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="50" Background="#FF494949" BorderBrush="White" Foreground="White"/>
+                    <Button x:Name="btOption1_W" Content="保存配置1" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="75" Height="50" Background="#FF494949" BorderBrush="White" Foreground="White"/>
+                    <Button x:Name="btOption2_R" Content="读取配置2" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Height="50" BorderBrush="White" Foreground="White" Background="#FF494949"/>
+                    <Button x:Name="btOption1_W1" Content="保存配置2" HorizontalAlignment="Left" Margin="90,65,0,0" VerticalAlignment="Top" Width="75" Height="50" Background="#FF494949" BorderBrush="White" Foreground="White"/>
+                    <Button x:Name="btOption3_R" Content="读取配置3" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Height="50" Background="#FF494949" BorderBrush="White" Foreground="White"/>
+                    <Button x:Name="btOption1_W2" Content="保存配置3" HorizontalAlignment="Left" Margin="170,65,0,0" VerticalAlignment="Top" Width="75" Height="50" BorderBrush="White" Foreground="White" Background="#FF494949"/>
+                    <Button x:Name="btOption4_R" Content="读取配置4" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Height="50" Background="#FF494949" BorderBrush="White" Foreground="White"/>
+                    <Button x:Name="btOption1_W3" Content="保存配置4" HorizontalAlignment="Left" Margin="250,65,0,0" VerticalAlignment="Top" Width="75" Height="50" Background="#FF494949" BorderBrush="White" Foreground="White"/>
+                    <Button x:Name="btOption5_R" Content="读取配置5" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top" Width="75" Height="50" Background="#FF494949" BorderBrush="White" Foreground="White"/>
+                    <Button x:Name="btOption1_W4" Content="保存配置5" HorizontalAlignment="Left" Margin="330,65,0,0" VerticalAlignment="Top" Width="75" Height="50" Background="#FF494949" BorderBrush="White" Foreground="White"/>
+                    <Button x:Name="button1" Content="恢复默认" HorizontalAlignment="Left" Margin="366,128,0,0" VerticalAlignment="Top" Width="75" Foreground="White" BorderBrush="White">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF2C0E0E" Offset="0"/>
+                                <GradientStop Color="#FF3E0B0B" Offset="1"/>
+                                <GradientStop Color="#FF7C1111" Offset="0.83"/>
+                                <GradientStop Color="#FFAE3636" Offset="0.452"/>
+                                <GradientStop Color="#FF683131" Offset="0.23"/>
+                                <GradientStop Color="#FFCD4747" Offset="0.604"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
             </TabItem>
         </TabControl>
 

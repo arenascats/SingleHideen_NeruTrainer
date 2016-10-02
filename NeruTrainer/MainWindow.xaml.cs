@@ -29,6 +29,7 @@ namespace NeruTrainer
         private int CurrentTrigFunction = Sigmoid;
         private int RetrainTime = 1;
         public int BeenInit = 1;
+        private int MaxElementinGroup = 15;//组内最大元素数量
         public int SampleNum; //样本数量计数器
         public double[,] InputData = new double[1000, 15];//最大支持1000组训练数据，每组15个
         public double[,] OutputData = new double[1000, 15];
@@ -163,7 +164,8 @@ namespace NeruTrainer
             }
             catch
             {
-                MessageBox.Show("文件读取分割过程失败", "检查文件是否有字符串，是否有空格");
+                MessageBox.Show("读取分割过程发生错误", "检查文件是否有字符串，是否有空格");
+                tbInformation.Text += "请检查文件的第"+ SampleNumCount+"行";
             }
             SampleNum = SampleNumCount;
             Console.WriteLine("SampleNum = {0}", SampleNum);
